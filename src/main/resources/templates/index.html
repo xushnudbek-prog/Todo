@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+</head>
+<body>
+<nav th:replace="fragments::header(profilePictureUrl=${profilePictureUrl})"></nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="todo : ${todos}" th:object="${todo}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{title}"></td>
+            <td th:text="*{priority}"></td>
+            <td th:text="*{createdAt}"></td>
+            <td>
+                <a th:href="@{/todo/update/{id}(id=${todo.id})}" class="btn btn-warning">Update</a> ||
+                <a th:href="@{/todo/delete/{id}(id=${todo.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<section th:replace="fragments::js_links"></section>
+</body>
+</html>

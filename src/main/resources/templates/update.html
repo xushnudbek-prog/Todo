@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <title>Update TODO</title>
+</head>
+<body>
+<nav th:replace="fragments::header"></nav>
+<div class="d-flex justify-content-center align-items-center min-vh-200">
+    <form th:action="@{'/todo/update/' + ${todo.id}}" method="post" class="w-50">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" th:attr="value=${todo.title}">
+        </div>
+        <label for="priority" class="form-label">Priority</label>
+        <input class="form-control"  name="priority" list="datalistOptions" id="priority" th:attr="value=${todo.priority}">
+        <datalist id="datalistOptions">
+            <option value="Low">
+            <option value="Medium">
+            <option value="High">
+        </datalist>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Update</button>
+    </form>
+</div>
+
+<section th:replace="fragments::js_links"></section>
+</body>
+</html>
