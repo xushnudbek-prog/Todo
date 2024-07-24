@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-2">
-            <h1 class="text-center">Login Page</h1>
+            <h1 class="text-center" th:text="#{login_page}"></h1>
             <div th:if="${errorMessage}" class="alert alert-danger">
                  <span th:text="${errorMessage}"></span>
             </div>
@@ -19,15 +19,15 @@
                     <input type="text" class="form-control" id="username" name="uname">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label" th:text="#{password}"></label>
                     <input type="password" class="form-control" id="password" name="pwd">
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" name="rememberMe" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Remember Me</label>
+                    <label class="form-check-label" for="rememberMe" th:text="#{remember_me}"></label>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
-                <a href="/auth/register">Register</a>
+                <a href="/auth/register" th:text="#{register}"></a>
             </form>
         </div>
 
