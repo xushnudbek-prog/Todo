@@ -9,14 +9,20 @@
     <div class="row">
         <div class="col-md-8 offset-2">
             <h1 class="text-center">Register Page</h1>
-            <form method="post" action="/auth/register" enctype="multipart/form-data">
+            <form method="post" action="/auth/register" enctype="multipart/form-data" th:object="${userRegisterDTO}">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="text" class="form-control" id="username" name="username" th:field="*{username}">
+                </div>
+                <div th:if="${#fields.hasErrors('username')}">
+                    <span  th:each="err : ${#fields.errors('username')}"></span>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+                </div>
+                <div th:if="${#fields.hasErrors('password')}">
+                    <span  th:each="err : ${#fields.errors('password')}"></span>
                 </div>
                 <div class="mb-3">
                     <label for="profile pic" class="form-label">Profile Picture</label>

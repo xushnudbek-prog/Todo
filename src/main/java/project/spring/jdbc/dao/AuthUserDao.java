@@ -30,7 +30,6 @@ public class AuthUserDao {
         setRole(id, 3);
         return id;
     }
-
     public Optional<AuthUser> findByUsername(@NonNull String username) {
         var sql = "select * from authuser where username = :username";
         var paramSource = new MapSqlParameterSource().addValue("username", username);

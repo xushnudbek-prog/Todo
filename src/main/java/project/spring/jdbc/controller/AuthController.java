@@ -1,11 +1,14 @@
 package project.spring.jdbc.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.MimeType;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,13 +49,22 @@ public class AuthController {
         return "auth/logout";
     }
     @GetMapping("/register")
-    public String registerPage() {
+    public String registerPage(Model model) {
+        model.addAttribute("userRegisterDTO", new UserRegisterDTO());
         return "auth/register";
     }
 
     @PostMapping("/register")
-    public String registerPage(@ModelAttribute UserRegisterDTO dto) throws IOException {
-        MultipartFile multipartFile = dto.picture();
+    public String registerPage(@Valid @ModelAttribute("userRegisterDTO") UserRegisterDTO dto, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "auth/register";
+        }
+        MultipartFile multipartFile;
+        try {
+            multipartFile = dto.getPicture();
+        }catch (Exception e){
+            multipartFile = null;
+        }
         String generatedName = String.valueOf(UUID.randomUUID());
         ProfilePicture profilePicture = ProfilePicture.builder()
                 .originalName(multipartFile.getOriginalFilename())
@@ -61,8 +73,8 @@ public class AuthController {
                 .build();
         int id = profilePictureDao.save(profilePicture);
         AuthUser user = AuthUser.builder()
-                .username(dto.username())
-                .password(passwordEncoder.encode(dto.password()))
+                .username(dto.getUsername())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .roles(List.of(new AuthRole()))
                 .profilePictureId(id)
                 .build();

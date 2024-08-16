@@ -45,7 +45,11 @@ public class TODODao {
     public TODO getById(int id) {
         String query = "select * from todo_list where id = ?;";
         BeanPropertyRowMapper<TODO> mapper = BeanPropertyRowMapper.newInstance(TODO.class);
-        return jdbcTemplate.queryForObject(query, mapper, id);
+        try {
+            return jdbcTemplate.queryForObject(query, mapper, id);
+        }catch (Exception e) {
+            return null;
+        }
     }
     public void delete(int id) {
         String query = "delete from todo_list where id = ?;";

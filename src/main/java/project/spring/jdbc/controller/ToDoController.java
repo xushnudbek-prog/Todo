@@ -16,6 +16,7 @@ import project.spring.jdbc.config.security.SessionUser;
 import project.spring.jdbc.dao.TODODao;
 import project.spring.jdbc.domains.AuthUser;
 import project.spring.jdbc.domains.TODO;
+import project.spring.jdbc.exceptions.NotFoundException;
 import project.spring.jdbc.services.ProfilePictureService;
 
 import java.time.LocalDateTime;
@@ -69,6 +70,9 @@ public class ToDoController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String delete(@PathVariable String id) {
         TODO currentTodo = todoDao.getById(Integer.parseInt(id));
+        if (currentTodo == null) {
+            throw new NotFoundException("TODO with id %s not found".formatted(id), "/");
+        }
         if (currentTodo.getCreatedBy() != sessionUser.getUser().getId())
             return "error/403";
         todoDao.delete(Integer.parseInt(id));
