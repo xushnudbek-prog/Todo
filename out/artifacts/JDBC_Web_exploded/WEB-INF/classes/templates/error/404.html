@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <title>Error 404</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <h1 class="text-center" th:text="${message}"></h1>
+            <a th:href="@{${path}}" class="btn btn-warning">Back</a>
+        </div>
+
+    </div>
+</div>
+
+
+<section th:replace="fragments::js_links"></section>
+</body>
+</html>

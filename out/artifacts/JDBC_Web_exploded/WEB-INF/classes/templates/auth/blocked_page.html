@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head(~{::title })">
+    <meta charset="UTF-8">
+    <title>Banned</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="alert alert-danger">
+                <h2>Unfortunately you have been banned from the system</h2>
+            </div>
+            <a href="/auth/login" class="btn btn-warning">Back to Login</a>
+        </div>
+
+    </div>
+</div>
+<section th:replace="fragments :: js_links "></section>
+</body>
+</html>

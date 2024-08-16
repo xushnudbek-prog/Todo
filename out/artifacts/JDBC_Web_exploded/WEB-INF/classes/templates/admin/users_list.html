@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <title>Users List</title>
+</head>
+<body>
+<nav th:replace="fragments::header"></nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${authUserList}" th:object="${user}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{username}"></td>
+            <td th:text="${user.isBlocked() ? 'Blocked' : 'Free'}"></td>
+            <td >
+                <a th:if="${!user.isBlocked()}" th:href="@{/admin/block/{id}(id=${user.id})}" class="btn btn-danger">Block</a>
+                <a th:if="${user.isBlocked()}" th:href="@{/admin/unblock/{id}(id=${user.id})}" class="btn btn-warning">Unblock</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<section th:replace="fragments::js_links"></section>
+</body>
+</html>
